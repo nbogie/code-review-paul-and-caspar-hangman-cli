@@ -3,6 +3,7 @@ const { prompt } = enquirer
 
 mainTask()
 
+
 async function mainTask() {
 
     let lives = 9
