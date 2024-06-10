@@ -1,28 +1,30 @@
-const { prompt } = require('enquirer')
+import enquirer from "enquirer"
+const { prompt } = enquirer
 
-let lives = 9
-let gameInProgress = true
-const answer = 'apple'
+mainTask()
 
-const answerArray = answer.split('')
+async function mainTask() {
 
-let letterLeftToGuess = (() => {
-    const caps = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
-    return caps.map(letter => letter.toLowerCase());
-  })();
+    let lives = 9
+    let gameInProgress = true
+    const answer = 'apple'
 
-let correctGuessArray = generateInitialGuess(answer)
+    const answerArray = answer.split('')
 
-while(gameInProgress){
-    mainTask()
-}
+    let letterLeftToGuess = (() => {
+        const caps = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
+        return caps.map(letter => letter.toLowerCase());
+    })();
 
-async function mainTask(){
+
+    let correctGuessArray = generateInitialGuess(answer)
+
+    console.log('main task started')
     const prompt = await askForLetter()
 
 }
 
-function askForLetter(){
+function askForLetter() {
     return prompt({
         type: 'input',
         message: 'Guess a letter!',
@@ -30,9 +32,9 @@ function askForLetter(){
     })
 }
 
-function generateInitialGuess(answer){
+function generateInitialGuess(answer) {
     const guessArray = []
-    for(let letter in answer){
+    for (let letter in answer) {
         guessArray.push('_')
     }
     return guessArray
