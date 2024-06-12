@@ -13,20 +13,32 @@ let letterLeftToGuess = (() => {
   return caps.map((letter) => letter.toLowerCase());
 })();
 
-let correctGuessArray = generateInitialGuess(answer);
+let guessArray = generateInitialGuess(answer);
 
 mainTask();
 
 async function mainTask() {
-  console.log(correctGuessArray.join(" "));
-  const prompt = await askForLetter();
-  console.log("hello");
+  console.log(guessArray.join(" "));
+  const guessedLetter = await askForLetter();
+  updateGuessArray(guessArray, answerArray, guessedLetter);
+
+  if (!guessArray.includes("_")) {
+    gameInProgress = false;
+  }
+
+  if (gameInProgress) {
+    mainTask();
+  } else {
+    console.log("congratulations, the answer was " + answer);
+  }
 }
 
-function askForLetter() {
-  return prompt({
+async function askForLetter() {
+  const promptResult = await prompt({
     type: "input",
     message: "Guess a letter!",
     name: "guessedLetter",
   });
+  // @ts-ignore
+  return promptResult.guessedLetter;
 }
