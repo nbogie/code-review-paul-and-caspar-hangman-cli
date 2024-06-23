@@ -1,27 +1,37 @@
 import enquirer from "enquirer";
-import { generateInitialGuess, updateGuessArray } from "./hangmanUtils.js";
+import {
+    generateInitialGuessArray,
+    guessIsComplete,
+    updateGuessArray,
+} from "./hangmanUtils.js";
+import { reportGuessArray, reportLoss, reportWin } from "./reports.js";
+import lodash from "lodash";
+const { sample } = lodash;
 const { prompt } = enquirer;
 
 async function mainTask() {
-    let gameInProgress = true;
-    const targetWord = "apple";
+    const targetWord = chooseARandomTargetWord();
+    let lives = 3;
+    const guessArray = generateInitialGuessArray(targetWord);
 
-    const targetWordLetters = targetWord.split("");
+    while (!guessIsComplete(guessArray) && lives > 0) {
+        reportGuessArray(guessArray, lives);
 
-    let guessArray = generateInitialGuess(targetWord);
-
-    console.log(guessArray.join(" "));
-    const guessedLetter = await askForLetter();
-    updateGuessArray(guessArray, targetWordLetters, guessedLetter);
-
-    if (!guessArray.includes("_")) {
-        gameInProgress = false;
+        const guessedLetter = await askForLetter();
+        const wasGuessInWord = updateGuessArray(
+            guessArray,
+            targetWord,
+            guessedLetter,
+        );
+        if (!wasGuessInWord) {
+            lives--;
+        }
     }
 
-    if (gameInProgress) {
-        mainTask();
+    if (lives > 0) {
+        reportWin(targetWord);
     } else {
-        console.log("congratulations, the answer was " + targetWord);
+        reportLoss(targetWord);
     }
 }
 
@@ -31,8 +41,17 @@ async function askForLetter() {
         message: "Guess a letter!",
         name: "guessedLetter",
     });
+
     // @ts-ignore
     return promptResult.guessedLetter;
+}
+
+/**
+ *
+ * @returns {string}
+ */
+function chooseARandomTargetWord() {
+    return sample(["apple", "banana"]);
 }
 
 mainTask();
