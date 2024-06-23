@@ -11,7 +11,7 @@
 # Run tests
 
 `yarn test` - this will run `jest`
- 
+
 or
 
 `yarn test --bail` - stop as soon as one suite fails
