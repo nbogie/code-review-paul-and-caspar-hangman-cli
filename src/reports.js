@@ -8,12 +8,18 @@ function reportWin(targetWord) {
     );
 }
 
-function reportGuessArray(guessArray, counter) {
-    console.log("STATUS: ", guessArray.join(" "), " count: ", counter);
+/**
+ *
+ *
+ * @param {LetterBoard} letterBoard
+ * @param {number} counter
+ */
+function reportLetterBoard(letterBoard, counter) {
+    console.log("STATUS: ", letterBoard.join(" "), " count: ", counter);
 }
 
 function reportLoss(targetWord) {
     console.log("Sorry you lose! The word was: " + targetWord);
 }
 
-export { reportGuessArray, reportLoss, reportWin };
+export { reportLetterBoard, reportLoss, reportWin };

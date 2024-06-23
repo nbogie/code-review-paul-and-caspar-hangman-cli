@@ -1,10 +1,10 @@
 import enquirer from "enquirer";
 import {
-    generateInitialGuessArray,
-    guessIsComplete,
-    updateGuessArray,
+    generateInitialLetterBoard,
+    letterBoardIsComplete,
+    updateLetterBoard,
 } from "./hangmanUtils.js";
-import { reportGuessArray, reportLoss, reportWin } from "./reports.js";
+import { reportLetterBoard, reportLoss, reportWin } from "./reports.js";
 import lodash from "lodash";
 const { sample } = lodash;
 const { prompt } = enquirer;
@@ -12,14 +12,14 @@ const { prompt } = enquirer;
 async function mainTask() {
     const targetWord = chooseARandomTargetWord();
     let lives = 3;
-    const guessArray = generateInitialGuessArray(targetWord);
+    const letterBoard = generateInitialLetterBoard(targetWord);
 
-    while (!guessIsComplete(guessArray) && lives > 0) {
-        reportGuessArray(guessArray, lives);
+    while (!letterBoardIsComplete(letterBoard) && lives > 0) {
+        reportLetterBoard(letterBoard, lives);
 
         const guessedLetter = await askForLetter();
-        const wasGuessInWord = updateGuessArray(
-            guessArray,
+        const wasGuessInWord = updateLetterBoard(
+            letterBoard,
             targetWord,
             guessedLetter,
         );
