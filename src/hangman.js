@@ -1,11 +1,12 @@
 import enquirer from "enquirer";
+import lodash from "lodash";
+
 import {
     generateInitialLetterBoard,
     letterBoardIsComplete,
     updateLetterBoard,
 } from "./hangmanUtils.js";
 import { reportLetterBoard, reportLoss, reportWin } from "./reports.js";
-import lodash from "lodash";
 const { sample } = lodash;
 const { prompt } = enquirer;
 

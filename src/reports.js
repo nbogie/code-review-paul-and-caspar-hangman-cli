@@ -1,3 +1,5 @@
+/** @typedef {import('./hangmanUtils.js').LetterBoard} LetterBoard */
+
 /**
  *
  * @param {string} targetWord
