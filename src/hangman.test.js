@@ -7,9 +7,6 @@ test("test generateInitialGuess", () => {
     const input2 = ["a", "p", "p", "l", "e"];
     const expected2 = ["_", "_", "_", "_", "_"];
     expect(generateInitialGuess(input2)).toEqual(expected2);
-    //   const input3 = ["apple pie"];
-    //   const expected3 = ["_", "_", "_", "_", "_", " ", "_", "_", "_"];
-    //   expect(generateInitialGuess(input3)).toEqual(expected3);
 });
 
 test("test for blank guessArray", () => {

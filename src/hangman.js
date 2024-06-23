@@ -2,25 +2,17 @@ import enquirer from "enquirer";
 import { generateInitialGuess, updateGuessArray } from "./hangmanUtils.js";
 const { prompt } = enquirer;
 
-let lives = 9;
-let gameInProgress = true;
-const answer = "apple";
-
-const answerArray = answer.split("");
-
-let letterLeftToGuess = (() => {
-    const caps = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
-    return caps.map((letter) => letter.toLowerCase());
-})();
-
-let guessArray = generateInitialGuess(answer);
-
-mainTask();
-
 async function mainTask() {
+    let gameInProgress = true;
+    const targetWord = "apple";
+
+    const targetWordLetters = targetWord.split("");
+
+    let guessArray = generateInitialGuess(targetWord);
+
     console.log(guessArray.join(" "));
     const guessedLetter = await askForLetter();
-    updateGuessArray(guessArray, answerArray, guessedLetter);
+    updateGuessArray(guessArray, targetWordLetters, guessedLetter);
 
     if (!guessArray.includes("_")) {
         gameInProgress = false;
@@ -29,7 +21,7 @@ async function mainTask() {
     if (gameInProgress) {
         mainTask();
     } else {
-        console.log("congratulations, the answer was " + answer);
+        console.log("congratulations, the answer was " + targetWord);
     }
 }
 
@@ -42,3 +34,5 @@ async function askForLetter() {
     // @ts-ignore
     return promptResult.guessedLetter;
 }
+
+mainTask();
